@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mmyf</groupId>
+    <artifactId>mcp-gateway</artifactId>
+    <version>1.0.0</version>
+
+    <name>mcp-gateway</name>
+    <description>mcp-gateway</description>
+
+    <modules>
+        <module>system-base</module>
+        <module>mcp-gateway-server</module>
+    </modules>
+
+    <packaging>pom</packaging>
+
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <skipTests>true</skipTests>
+        <springboot.version>3.4.5</springboot.version>
+        <easyexcel.version>3.3.2</easyexcel.version>
+        <mybatis.version>3.0.3</mybatis.version>
+        <druid.version>1.2.24</druid.version>
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
+        <freemarker.version>2.3.32</freemarker.version>
+        <springdoc-openapi.version>2.8.8</springdoc-openapi.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
+        <jetcache.version>2.7.8</jetcache.version>
+        <redisson-spring-boot-starter.version>3.25.2</redisson-spring-boot-starter.version>
+        <jetbrains.annotations.version>24.0.0</jetbrains.annotations.version>
+        <shiro.version>2.0.4</shiro.version>
+        <jwt.version>4.4.0</jwt.version>
+        <pingyin4j.version>2.5.0</pingyin4j.version>
+        <zip4j.version>2.11.5</zip4j.version>
+        <commons-io.version>2.15.1</commons-io.version>
+        <hutool.version>5.8.26</hutool.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <!-- Import dependency management from Spring Boot -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${springboot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

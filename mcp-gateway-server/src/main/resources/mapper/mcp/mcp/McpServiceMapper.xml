@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mmyf.mcp.mapper.mcp.McpServiceMapper">
+
+    <!-- 通用查询结果 -->
+    <resultMap id="BaseResultMap" type="com.mmyf.mcp.model.entity.mcp.McpService">
+        <id column="c_id" property="id" />
+        <result column="c_name" property="name" />
+        <result column="c_desc" property="desc" />
+        <result column="c_endpoint" property="endpoint" />
+        <result column="n_api_count" property="apiCount" />
+        <result column="c_status" property="status" />
+        <result column="dt_publish_time" property="publishTime" />
+        <result column="dt_create_time" property="createTime" />
+        <result column="dt_modify_time" property="modifyTime" />
+    </resultMap>
+
+</mapper>

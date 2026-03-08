@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mmyf.commons.mapper.organ.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mmyf.commons.model.entity.organ.User">
+        <id column="c_id" property="id"/>
+        <result column="n_external_nid" property="externalNid"/>
+        <result column="c_external_cid" property="externalCid"/>
+        <result column="c_loginid" property="loginid"/>
+        <result column="c_name" property="name"/>
+        <result column="c_password" property="password"/>
+        <result column="c_mail" property="mail"/>
+        <result column="c_ip" property="ip"/>
+        <result column="c_tenant" property="tenant"/>
+        <result column="c_dept" property="dept"/>
+        <result column="c_valid" property="valid"/>
+        <result column="n_order" property="nOrder"/>
+        <result column="c_type" property="userType"/>
+        <result column="j_role_id" property="roleId" jdbcType="VARCHAR" typeHandler="com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler"/>
+        <result column="lc_ext" property="ext"/>
+        <result column="dt_create_time" property="createTime"/>
+        <result column="dt_last_modify" property="modifyTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        c_id, n_external_nid, c_external_cid
+        , c_loginid, c_name, c_password, c_mail, c_ip, c_tenant, c_dept, c_valid, n_order, c_type, j_role_id, lc_ext, dt_create_time, dt_last_modify
+    </sql>
+
+</mapper>

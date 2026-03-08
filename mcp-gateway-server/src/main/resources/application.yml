@@ -1,0 +1,168 @@
+server:
+  port: 8888
+  servlet:
+    # 应用上下文
+    context-path: /mcp-gateway
+  compression:
+    enabled: true
+    mime-types: application/json
+  tomcat:
+    basedir: ${user.home}/tomcat
+
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+    groups-order: desc
+
+root:
+  tenant: 0
+
+login:
+  remember: false
+  # 不需要登陆拦截的url，多个以英文逗号隔开
+  permitUrl: /mcp/sse/**,/mcp/http/**
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driverClassName: org.postgresql.Driver
+      url: jdbc:postgresql://${datasource.ip}:${datasource.port}/mcp_gateway?charset=utf8
+      username: ${datasource.username}
+      password: ${datasource.password}
+      connection-properties: config.decrypt=true;config.decrypt.key=${druid.public.key}
+      # 连接池的配置信息
+      # 初始化时建立物理连接的个数
+      initial-size: 30
+      # 连接池最小连接数
+      min-idle: 30
+      # 连接池最大连接数
+      max-active: 30
+      # 获取连接时最大等待时间，单位毫秒
+      max-wait: 60000
+      # 申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。
+      test-while-idle: true
+      # 既作为检测的间隔时间又作为testWhileIdel执行的依据
+      time-between-connect-error-millis: 60000
+      # 销毁线程时检测当前连接的最后活动时间和当前时间差大于该值时，关闭当前连接
+      min-evictable-idle-time-millis: 30000
+      # 用来检测连接是否有效的sql 必须是一个查询语句
+      # mysql中为 select 'x'
+      # oracle中为 select 1 from dual
+      validation-query: select 'x'
+      # 申请连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
+      test-on-borrow: false
+      # 归还连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
+      test-on-return: false
+      # 是否缓存preparedStatement,mysql5.5+建议开启
+      pool-prepared-statements: true
+      # 当值大于0时poolPreparedStatements会自动修改为true
+      max-pool-prepared-statement-per-connection-size: 30
+      # 合并多个DruidDataSource的监控数据
+      use-global-data-source-stat: false
+      # 配置扩展插件
+#      filters: stat, slf4j, config
+      filter:
+        config:
+          enabled: true
+        slf4j:
+          enabled: true
+        # 打开mergeSql功能；慢SQL记录
+        stat:
+          enabled: true
+          merge-sql: true
+          log-slow-sql: true
+          slow-sql-millis: 1000
+      # 定时输出统计信息到日志中，并每次输出日志会导致清零（reset）连接池相关的计数器。
+      time-between-log-stats-millis: 300000
+      # 配置DruidStatFilter
+      web-stat-filter:
+        enabled: true
+        url-pattern: '/*'
+        exclusions: '*.html,*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*'
+      # 配置DruidStatViewServlet
+      stat-view-servlet:
+        # 是否启用StatViewServlet（监控页面）默认值为false（考虑到安全问题默认并未启动，如需启用建议设置密码或白名单以保障安全）
+        enabled: true
+        url-pattern: '/druid/*'
+        # IP白名单(没有配置或者为空，则允许所有访问)
+        allow:
+        # IP黑名单 (存在共同时，deny优先于allow)
+        deny: 192.168.0.128
+        # 禁用HTML页面上的“Reset All”功能
+        reset-enable: false
+        # 登录名
+        login-username: mcp
+        # 登录密码
+        login-password: mcp
+  flyway:
+    enabled: true
+    # 迁移脚本的位置，默认db/migration，可配置
+    locations: classpath:/db
+    # 已经存在表结构数据的已有数据库使用flyway需要设置为true,且版本号要比1大
+    #baseline-on-migrate: true
+    #baseline-version:
+    validate-on-migrate: true #脚本执行前先校验
+    clean-on-validation-error: false #脚本校验规则，出现不通过校验时处理策略。配置为true，则会直接清库重新执行全量脚本。配置为false，则直接抛错。开发生产环境都建议配置为false
+    out-of-order: true # 检查出脚本有漏执行情况，是否补充执行。必须配置为 true，方便开发过程中的补充脚本
+    schemas: system_base
+    init-sqls:
+      - CREATE SCHEMA IF NOT EXISTS db_mcp AUTHORIZATION ${datasource.username};
+      - CREATE SCHEMA IF NOT EXISTS system_base AUTHORIZATION ${datasource.username};
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 1000MB
+
+# https://github.com/alibaba/jetcache/wiki/GettingStarted_CN
+jetcache:
+  # 每15分钟在控制台汇总一次数据
+  statIntervalMinutes: 15
+  areaInCacheName: false
+  local:
+    default:
+      type: caffeine
+      limit: 10000
+      keyConvertor: fastjson
+      expireAfterWriteInMillis: 100000
+  remote:
+    default:
+      type: ${system.remote.cache:redis}
+      keyConvertor: fastjson #其他可选：fastjson/jackson
+      broadcastChannel: projectA
+      valueEncoder: java #其他可选：kryo/kryo5
+      valueDecoder: java #其他可选：kryo/kryo5
+      poolConfig:
+        minIdle: 5
+        maxIdle: 20
+        maxTotal: 50
+      host: ${redis.host:localhost}
+      port: ${redis.port:6379}
+      password: ${redis.password:mcp}
+      database: ${redis.database:0}
+
+concurrent:
+  # 覆盖默认线程池
+  threadpool:
+    thread-name-prefix: dbd-default-
+    core-pool-size: 128
+    max-pool-size: 256
+    queue-capacity: 100
+    keep-alive-seconds: 30
+    copyWebContext: true
+  # Since 1.0.1-SNAPSHOT 自定义线程池配置
+  custom-thread-pools:
+    # ai chat 线程参数设置
+    aiChatThreadPool:
+      thread-name-prefix: ai-chat-
+      core-pool-size: 64
+      max-pool-size: 256
+      queue-capacity: 100
+      keep-alive-seconds: 30
+      copyWebContext: true
+
+
+

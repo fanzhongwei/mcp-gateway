@@ -1,0 +1,8 @@
+.nuxt
+.husky
+node_modules
+dist
+.output
+tsconfig.json
+.VSCodeCounter
+pnpm-lock.yaml

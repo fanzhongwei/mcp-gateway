@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mmyf.commons.mapper.access.DwjkAccessMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mmyf.commons.model.entity.access.DwjkAccess">
+        <id column="c_id" property="id" />
+        <result column="c_tenant" property="tenant"/>
+        <result column="c_system_name" property="systemName" />
+        <result column="c_access_token" property="accessToken" />
+        <result column="c_ip_whitelist" property="ipWhitelist" />
+        <result column="c_ip_blacklist" property="ipBlacklist" />
+        <result column="dt_access_time_start" property="accessTimeStart" />
+        <result column="dt_access_time_end" property="accessTimeEnd" />
+        <result column="c_contact" property="contact" />
+        <result column="c_contact_number" property="contactNumber" />
+        <result column="c_authorizer" property="authorizer" />
+        <result column="c_authorization_time" property="authorizationTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        c_id, c_tenant, c_system_name, c_access_token, c_ip_whitelist, c_ip_blacklist, dt_access_time_start, dt_access_time_end, c_contact, c_contact_number, c_authorizer, c_authorization_time
+    </sql>
+
+</mapper>
