@@ -1,0 +1,50 @@
+server:
+  port: 8888
+
+debug: true
+
+login:
+  remember: false
+  # 不需要登陆拦截的url，多个以英文逗号隔开
+  permitUrl: /swagger-ui/**,/v3/api-docs/**,/mcp/**
+
+log:
+  level: debug
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+
+datasource:
+  ip: localhost
+  port: 6543
+  username: mcp_gateway
+  password: hjU1y9aojfcPwWCwT+Xrol3P3+INeWYPczp7wiNhyzvC2KVZm929yM7bENntCWlD8PG9uCfKbiDY1U109VesJg==
+
+system:
+  master: true
+  rocketmq:
+    enable: false
+  redis:
+    enabled: false
+  remote:
+    cache: mock # 本地环境可能没有部署redis，这里以mock方式提供远端缓存
+
+
+druid:
+  public:
+    key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKH/3LWTrus8pj1mbKYVEw/ywUmk9PAN3JqkVamf8XkyE0MsHI3CXdRAA5ZCDxAuRKz3AkLqDJYRTpgV8BnP8W0CAwEAAQ==
+spring:
+  datasource:
+    druid:
+      filter:
+        stat:
+          slow-sql-millis: 100
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+

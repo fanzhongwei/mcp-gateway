@@ -1,0 +1,12 @@
+---
+alwaysApply: true
+---
+
+后端规范：
+- 尽量保持controller的简洁，复杂逻辑放到对应的service中实现
+
+
+前端规范：
+- mcp-gateway-web为前端项目
+- UI框架使用nuxt
+- 编写代码需要满足项目的eslint规范

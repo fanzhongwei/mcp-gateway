@@ -1,0 +1,120 @@
+html,
+body {
+	font-size: 16px;
+}
+
+/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+	font-family: 'zrlziti';
+	font-weight: 400;
+	src:
+		url('@/assets/font/rkwEcYOYz26L.woff2') format('woff2'),
+		url('@/assets/font/rkwEcYOYz26L.woff') format('woff');
+	font-display: swap;
+}
+.zrlziti {
+	font-family: 'zrlziti';
+	color: #333;
+}
+.dark {
+	.zrlziti {
+		color: #fff;
+	}
+}
+
+/* 更改滚动条拇指部分的背景颜色和圆角 */
+::-webkit-scrollbar-thumb {
+	background-color: #888; /* 滚动条拇指的颜色 */
+	border-radius: 5px; /* 圆角大小 */
+	transition: background-color 0.3s; /* 平滑过渡效果 */
+}
+
+/* 更改滚动条拇指部分在鼠标悬停时的背景颜色 */
+::-webkit-scrollbar-thumb:hover {
+	background-color: #555; /* 鼠标悬停时的颜色 */
+}
+
+/* 更改滚动条轨道的样式（可选） */
+::-webkit-scrollbar-track {
+	background-color: #f1f1f1; /* 滚动条轨道的颜色 */
+	border-radius: 5px; /* 轨道的圆角大小，通常与拇指保持一致 */
+}
+
+/* 更改横向滚动条的宽度 */
+::-webkit-scrollbar {
+	width: 5px; /* 滚动条的宽度 */
+	height: 5px; /* 横向滚动条的高度 */
+}
+
+.dark {
+	// notification-深色模式
+	// message-深色模式
+	.tme-notification,
+	.tme-message .ant-message-notice-content {
+		&::before {
+			background-color: #002443;
+		}
+	}
+}
+// notification
+// message
+.tme-notification,
+.tme-message .ant-message-notice-content {
+	overflow: hidden;
+	position: relative;
+	&::before {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 0%;
+		height: 3px;
+		background-color: #000;
+		opacity: 0.3;
+		animation: change 3.5s ease-out;
+	}
+	@keyframes change {
+		0% {
+			width: 100%;
+		}
+		100% {
+			width: 0%;
+		}
+	}
+	.ant-notification-notice-message {
+		margin-bottom: 0 !important;
+	}
+}
+
+/* 给所有的a-modal设置最大宽度 */
+.ant-modal-content {
+	max-width: 1400px;
+}
+
+.custom-switch .ant-switch-inner {
+	width: 100px; /* 修改为你想要的长度 */
+}
+
+.add-button {
+	background-color: #02d200 !important;
+	&:hover {
+		background-color: #6dd86b !important;
+	}
+}
+
+// modal 详情展示样式
+.modal-item-box {
+	.modal-item-msg {
+		text-align: center;
+		box-shadow: 0 0 0 1px #d1d5db;
+
+		.label {
+			background: #f4f4f5;
+			border-right: 1px solid #d1d5db;
+			font-weight: 500;
+		}
+		.msg {
+			background-color: #fff;
+		}
+	}
+}

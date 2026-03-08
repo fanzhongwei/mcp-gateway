@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mmyf.commons.mapper.log.ApiLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mmyf.commons.model.entity.log.ApiLog">
+        <id column="c_id" property="id"/>
+        <result column="c_ip" property="ip"/>
+        <result column="c_user" property="user"/>
+        <result column="c_user_name" property="userName"/>
+        <result column="c_tenant" property="tenant"/>
+        <result column="c_module" property="module"/>
+        <result column="c_api" property="api"/>
+        <result column="c_api_name" property="apiName"/>
+        <result column="c_request" property="request"/>
+        <result column="c_status" property="status"/>
+        <result column="c_response" property="response"/>
+        <result column="dt_request_start_time" property="requestStartTime"/>
+        <result column="dt_request_end_time" property="requestEndTime"/>
+        <result column="n_request_times" property="requestTimes"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        c_id
+        , c_ip, c_user, c_user_name, c_tenant, c_module, c_api, c_api_name, c_request, c_response, dt_request_start_time, dt_request_end_time, n_request_times
+    </sql>
+
+</mapper>

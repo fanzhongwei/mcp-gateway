@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration debug="false">
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+    <define name="IP" class="com.mmyf.commons.util.logback.LogbackIpGetProperty" />
+    <springProperty scope="context" name="server.port" source="server.port"/>
+    <property name="PORT" value="${server.port}" />
+    <!-- ！！！应用标识，整个模板建议只修改此属性值！！！ -->
+    <property name="APP_NAME" value="mcp-gateway" />
+    <property name="LOG_HOME" value="logs" />
+    <!-- 日志保留天数 -->
+    <property name="MAX_HISTORY" value="30" />
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${APP_NAME}_${IP}_${PORT}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${APP_NAME}_${IP}_${PORT}.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] %logger{20} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>error</level>
+        </filter>
+        <file>${LOG_HOME}/${APP_NAME}_error_${IP}_${PORT}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${APP_NAME}_error_${IP}_${PORT}.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] %logger{20} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <appender name="FILE_JDBC" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>warn</level>
+        </filter>
+        <file>${LOG_HOME}/${APP_NAME}_jdbc_${IP}_${PORT}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${APP_NAME}_jdbc_${IP}_${PORT}.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] [%X{request.url}] %logger{20} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <append>true</append>
+    </appender>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <Target>System.out</Target>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS, GMT+8} [%-5level] [%thread] %c - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 异步记录器 -->
+    <appender name="FILE_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FILE" />
+        <discardingThreshold>0</discardingThreshold>
+    </appender>
+    <appender name="FILE_ERROR_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FILE_ERROR" />
+    </appender>
+    <appender name="FILE_JDBC_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FILE_JDBC" />
+        <discardingThreshold>0</discardingThreshold>
+    </appender>
+    <appender name="CONSOLE_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="CONSOLE" />
+        <discardingThreshold>0</discardingThreshold>
+        <neverBlock>true</neverBlock>
+    </appender>
+
+    <!-- jetcache 缓存统计信息 -->
+    <logger name="com.alicp.jetcache.support.StatInfoLogger" level="info"/>
+    <logger name="com.alibaba.druid.filter.stat.StatFilter" additivity="false">
+        <appender-ref ref="FILE_JDBC_ASYNC"/>
+        <!-- debug 控制输出方法名，appender中filter过滤warn级别以下的日志 -->
+        <level value="DEBUG"/>
+    </logger>
+    <logger name="org.springframework" level="info" additivity="false">
+        <appender-ref ref="CONSOLE_ASYNC"/>
+    </logger>
+    <logger name="org.springframework.web" level="info" additivity="false">
+        <appender-ref ref="CONSOLE_ASYNC"/>
+    </logger>
+    <logger name="org.flywaydb" level="info" additivity="false">
+        <appender-ref ref="CONSOLE_ASYNC"/>
+    </logger>
+    <logger name="com.mmyf.mcp" level="${log.level:info}" additivity="false">
+        <appender-ref ref="CONSOLE_ASYNC"/>
+    </logger>
+    <root>
+        <level value="warn"/>
+        <appender-ref ref="CONSOLE_ASYNC"/>
+        <appender-ref ref="FILE_ASYNC"/>
+        <appender-ref ref="FILE_ERROR_ASYNC"/>
+    </root>
+</configuration>

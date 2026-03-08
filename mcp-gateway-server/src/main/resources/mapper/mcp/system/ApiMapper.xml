@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mmyf.mcp.mapper.system.ApiMapper">
+
+    <!-- 通用查询结果 -->
+    <resultMap id="BaseResultMap" type="com.mmyf.mcp.model.entity.system.Api">
+        <id column="c_id" property="id" />
+        <result column="c_system_id" property="systemId" />
+        <result column="c_method" property="method" />
+        <result column="c_path" property="path" />
+        <result column="c_name" property="name" />
+        <result column="c_description" property="description" />
+        <result column="j_query_params" property="queryParams" 
+                typeHandler="com.mmyf.commons.mybatis.PostgreSQLJsonTypeHandler" />
+        <result column="j_headers" property="headers" 
+                typeHandler="com.mmyf.commons.mybatis.PostgreSQLJsonTypeHandler" />
+        <result column="j_body_param" property="bodyParam" 
+                typeHandler="com.mmyf.commons.mybatis.PostgreSQLJsonTypeHandler" />
+        <result column="j_url_encoded_params" property="urlEncodedParams" 
+                typeHandler="com.mmyf.commons.mybatis.PostgreSQLJsonTypeHandler" />
+        <result column="j_cookies" property="cookies" 
+                typeHandler="com.mmyf.commons.mybatis.PostgreSQLJsonTypeHandler" />
+        <result column="j_response_config" property="responseConfig" 
+                typeHandler="com.mmyf.commons.mybatis.PostgreSQLJsonTypeHandler" />
+        <result column="dt_create_time" property="createTime" />
+        <result column="dt_modify_time" property="modifyTime" />
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mmyf.commons.mapper.code.CodeTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mmyf.commons.model.entity.code.CodeType">
+        <id column="c_id" property="id" />
+        <result column="c_name" property="name" />
+        <result column="c_valid" property="valid" />
+        <result column="c_editable" property="editable" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        c_id, c_name, c_valid, c_editable
+    </sql>
+
+</mapper>
