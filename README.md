@@ -33,7 +33,7 @@ mvn clean package
 - 启动数据库
 
 ```bash
-cd docker
+cd docker/PostgreSQL
 docker-compose up -d
 ```
 - 启动服务
