@@ -2,15 +2,14 @@ server:
   port: 8888
 
 datasource:
-  ip: 192.168.0.196
+  ip: localhost
   port: 6543
-  username: dbdonline
-  password: kSJcek22D1IdB/eg7lfXCMgL4KrP6MjeTtVnhBXPF2KbzZDG7rC+8sCWKvQeNufULKpBw9zJ5YFssH1HW6GkSg==
-
+  username: mcp_gateway
+  password: hjU1y9aojfcPwWCwT+Xrol3P3+INeWYPczp7wiNhyzvC2KVZm929yM7bENntCWlD8PG9uCfKbiDY1U109VesJg==
 
 druid:
   public:
-    key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKjt6UO+y92PWupJsZ58OpBm3uSdj8FOsQwRyLEoWVv6eKpx6Ul/VduMcuvd8XRYq6z4qpoT/elHMgq0XzvcI0sCAwEAAQ==
+    key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKH/3LWTrus8pj1mbKYVEw/ywUmk9PAN3JqkVamf8XkyE0MsHI3CXdRAA5ZCDxAuRKz3AkLqDJYRTpgV8BnP8W0CAwEAAQ==
 spring:
   datasource:
     druid:

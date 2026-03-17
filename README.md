@@ -30,6 +30,14 @@ mvn clean package
 
 ### 2. 运行
 
+- 启动数据库
+
+```bash
+cd docker
+docker-compose up -d
+```
+- 启动服务
+
 ```bash
 java -jar mcp-gateway-server/target/mcp-gateway-server.jar
 ```
@@ -43,5 +51,6 @@ java -jar mcp-gateway-server/target/mcp-gateway-server.jar
 ```
 mcp-gateway/
 ├── mcp-gateway-server/   # MCP 网关主服务（协议实现、解析器、转换器）
+├── mcp-gateway-web/      # MCP 网关 Web 
 └── system-base/          # 系统基础模块
 ```
