@@ -19,7 +19,7 @@ import 'dayjs/locale/zh-cn'
 
 // 菜单数据-从 config/menu 引入，与登录首屏跳转等共用同一数据源
 import { MENU_DATA_SOURCE } from '~/config/menu'
-// eslint-disable-next-line import/no-named-as-default-member
+
 dayjs.locale('zh-cn')
 
 // route
@@ -647,7 +647,7 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-@import '@/assets/style/data.scss';
+@use '@/assets/style/data.scss' as *;
 
 // 主体内容布局
 .layout-content {

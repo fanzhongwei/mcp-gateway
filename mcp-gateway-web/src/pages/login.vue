@@ -80,7 +80,6 @@ const onFinish = async (values: any) => {
 			})
 		} else {
 			// 进入当前用户有权限的第一个页面
-			debugger
 			const { data } = await fetchUserInfo(res.data.id)
 			const rightList = data?.rightList || []
 			userInfo.value.rightList = rightList

@@ -7,6 +7,15 @@ datasource:
   username: mcp_gateway
   password: hjU1y9aojfcPwWCwT+Xrol3P3+INeWYPczp7wiNhyzvC2KVZm929yM7bENntCWlD8PG9uCfKbiDY1U109VesJg==
 
+system:
+  master: true
+  rocketmq:
+    enable: false
+  redis:
+    enabled: false
+  remote:
+    cache: mock # 本地环境可能没有部署redis，这里以mock方式提供远端缓存
+
 druid:
   public:
     key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKH/3LWTrus8pj1mbKYVEw/ywUmk9PAN3JqkVamf8XkyE0MsHI3CXdRAA5ZCDxAuRKz3AkLqDJYRTpgV8BnP8W0CAwEAAQ==

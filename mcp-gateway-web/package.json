@@ -1,11 +1,11 @@
 {
-	"name": "payment-platform",
+	"name": "mcp-gateway",
 	"private": true,
 	"type": "module",
 	"scripts": {
 		"build": "nuxt build",
-		"dev": "rm -rf dist && npm run lint &&  nuxt dev --open --host --port 3666",
-		"devwin": "rimraf dist && npm run lint && nuxt dev --open --host --port 3666",
+		"dev": "rm -rf dist && npm run lint &&  nuxt dev --open --host localhost --port 3666",
+		"devwin": "rimraf dist && npm run lint && nuxt dev --open --host localhost --port 3666",
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare",
