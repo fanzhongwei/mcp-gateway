@@ -9,9 +9,19 @@
 <script setup lang="tsx">
 import { h } from 'vue'
 import { getApi } from '~/utils/apiSaveUtils'
+import manualIcon from '~/assets/images/import-icons/manual.svg'
+import openapiIcon from '~/assets/images/import-icons/openapi.svg'
+import postmanIcon from '~/assets/images/import-icons/postman.svg'
+import curlIcon from '~/assets/images/import-icons/curl.svg'
+import apifoxIcon from '~/assets/images/import-icons/apifox.svg'
+import harIcon from '~/assets/images/import-icons/har.svg'
 import EnvSelect from './EnvSelect.vue'
 import ManualImport from './importTypes/manual.vue'
 import OpenApiImport from './importTypes/openapi.vue'
+import PostmanImport from './importTypes/postman.vue'
+import CurlImport from './importTypes/curl.vue'
+import ApifoxImport from './importTypes/apifox.vue'
+import HarImport from './importTypes/har.vue'
 
 // 接收父组件传递的业务系统信息
 const props = defineProps<{
@@ -28,44 +38,51 @@ const handleEnvChange = (env: any | null) => {
 }
 
 // 数据源格式类型
-type DataSourceType = 'manual' | 'openapi' | 'postman' | 'curl' | 'apifox'
+type DataSourceType =
+	| 'manual'
+	| 'openapi'
+	| 'postman'
+	| 'curl'
+	| 'apifox'
+	| 'har'
 
 // 数据源格式选项
 const dataSourceOptions = [
 	{
 		type: 'manual' as DataSourceType,
 		name: '手动录入',
-		icon: 'ri-edit-box-line',
-		color: '#1890ff',
+		icon: manualIcon,
 		description: '手动填写接口信息',
 	},
 	{
 		type: 'openapi' as DataSourceType,
 		name: 'OpenAPI/Swagger',
-		icon: 'ri-file-code-line',
-		color: '#52c41a',
+		icon: openapiIcon,
 		description: '导入 OpenAPI 或 Swagger 规范文件',
 	},
 	{
 		type: 'postman' as DataSourceType,
 		name: 'Postman',
-		icon: 'ri-file-list-3-line',
-		color: '#ff6b35',
+		icon: postmanIcon,
 		description: '导入 Postman 集合文件',
 	},
 	{
 		type: 'curl' as DataSourceType,
 		name: 'cURL',
-		icon: 'ri-terminal-box-line',
-		color: '#1890ff',
+		icon: curlIcon,
 		description: '导入 cURL 命令',
 	},
 	{
 		type: 'apifox' as DataSourceType,
 		name: 'Apifox',
-		icon: 'ri-file-list-2-line',
-		color: '#ff4d4f',
+		icon: apifoxIcon,
 		description: '导入 Apifox 项目文件',
+	},
+	{
+		type: 'har' as DataSourceType,
+		name: 'HAR',
+		icon: harIcon,
+		description: '导入 HAR 抓包文件',
 	},
 ]
 
@@ -141,14 +158,6 @@ watch(
 	},
 )
 
-// 检查是否是未实现的数据源
-const isUnimplementedDataSource = computed(() => {
-	return (
-		importForm.selectedType &&
-		['postman', 'curl', 'apifox'].includes(importForm.selectedType)
-	)
-})
-
 // 根据类型获取对应的导入组件
 const getImportComponent = () => {
 	switch (importForm.selectedType) {
@@ -172,10 +181,37 @@ const getImportComponent = () => {
 				onSuccess: handleCancel,
 			})
 		case 'postman':
+			return h(PostmanImport, {
+				systemId: props.systemId,
+				systemName: props.systemName,
+				selectedEnv: selectedEnv.value,
+				onBack: handleBackToSource,
+				onSuccess: handleCancel,
+			})
 		case 'curl':
+			return h(CurlImport, {
+				systemId: props.systemId,
+				systemName: props.systemName,
+				selectedEnv: selectedEnv.value,
+				onBack: handleBackToSource,
+				onSuccess: handleCancel,
+			})
 		case 'apifox':
-			// 未实现的数据源，返回 null，在模板中显示提示
-			return null
+			return h(ApifoxImport, {
+				systemId: props.systemId,
+				systemName: props.systemName,
+				selectedEnv: selectedEnv.value,
+				onBack: handleBackToSource,
+				onSuccess: handleCancel,
+			})
+		case 'har':
+			return h(HarImport, {
+				systemId: props.systemId,
+				systemName: props.systemName,
+				selectedEnv: selectedEnv.value,
+				onBack: handleBackToSource,
+				onSuccess: handleCancel,
+			})
 		default:
 			return null
 	}
@@ -261,8 +297,12 @@ defineExpose({
 							class="data-source-card"
 							@click="handleSelectDataSource(option.type)"
 						>
-							<div class="card-icon" :style="{ backgroundColor: option.color }">
-								<i :class="option.icon"></i>
+							<div class="card-icon">
+								<img
+									:src="option.icon"
+									:alt="option.name"
+									class="source-icon"
+								/>
 							</div>
 							<div class="card-content">
 								<div class="card-name">{{ option.name }}</div>
@@ -274,24 +314,7 @@ defineExpose({
 			</div>
 			<!-- 具体导入页面 -->
 			<div v-else class="import-form-container">
-				<!-- 未实现的数据源 -->
-				<div v-if="isUnimplementedDataSource" class="unimplemented-source">
-					<div class="unimplemented-header">
-						<a-button
-							type="text"
-							class="back-button"
-							@click="handleBackToSource"
-						>
-							<i class="ri-arrow-left-line mr-1"></i>
-							返回
-						</a-button>
-					</div>
-					<div class="unimplemented-content">
-						<a-empty description="功能开发中，敬请期待" />
-					</div>
-				</div>
-				<!-- 已实现的导入组件 -->
-				<component :is="getImportComponent()" v-else />
+				<component :is="getImportComponent()" />
 			</div>
 		</div>
 	</div>
@@ -370,32 +393,6 @@ defineExpose({
 			display: flex;
 			flex-direction: column;
 			overflow: hidden;
-
-			.unimplemented-source {
-				flex: 1;
-				display: flex;
-				flex-direction: column;
-				overflow: hidden;
-
-				.unimplemented-header {
-					padding: 12px 16px;
-					border-bottom: 1px solid #f0f0f0;
-					.dark & {
-						border-bottom-color: #303030;
-					}
-
-					.back-button {
-						padding: 0;
-					}
-				}
-
-				.unimplemented-content {
-					flex: 1;
-					display: flex;
-					align-items: center;
-					justify-content: center;
-				}
-			}
 		}
 
 		.import-data-source-wrapper {
@@ -498,18 +495,25 @@ defineExpose({
 					}
 
 					.card-icon {
-						width: 48px;
-						height: 48px;
+						width: 56px;
+						height: 56px;
 						display: flex;
 						align-items: center;
 						justify-content: center;
-						border-radius: 8px;
+						border-radius: 10px;
 						margin-right: 12px;
 						flex-shrink: 0;
+						background-color: #f5f5f5 !important;
+						border: 1px solid rgba(0, 0, 0, 0.08);
+						.dark & {
+							border-color: rgba(255, 255, 255, 0.14);
+						}
 
-						i {
-							font-size: 24px;
-							color: #fff;
+						.source-icon {
+							width: 42px;
+							height: 42px;
+							object-fit: contain;
+							display: block;
 						}
 					}
 
@@ -518,10 +522,10 @@ defineExpose({
 						min-width: 0;
 
 						.card-name {
-							font-size: 14px;
+							font-size: 15px;
 							font-weight: 500;
 							color: rgba(0, 0, 0, 0.9);
-							margin-bottom: 4px;
+							margin-bottom: 6px;
 							.dark & {
 								color: rgba(255, 255, 255, 0.9);
 							}
