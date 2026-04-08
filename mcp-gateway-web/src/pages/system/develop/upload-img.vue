@@ -20,21 +20,23 @@ const imgUrl = ref('')
 	>
 		<template #message>
 			<table>
-				<tr>
-					<th>属性</th>
-					<th>描述</th>
-					<th>默认值</th>
-				</tr>
-				<tr>
-					<td>code</td>
-					<td>在图片 url 地址中使用固定的值拼接</td>
-					<td>-</td>
-				</tr>
-				<tr>
-					<td>v-model:fileKey</td>
-					<td>双向绑定的值</td>
-					<td>-</td>
-				</tr>
+				<tbody>
+					<tr>
+						<th>属性</th>
+						<th>描述</th>
+						<th>默认值</th>
+					</tr>
+					<tr>
+						<td>code</td>
+						<td>在图片 url 地址中使用固定的值拼接</td>
+						<td>-</td>
+					</tr>
+					<tr>
+						<td>v-model:fileKey</td>
+						<td>双向绑定的值</td>
+						<td>-</td>
+					</tr>
+				</tbody>
 			</table>
 		</template>
 	</show-code>

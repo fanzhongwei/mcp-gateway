@@ -36,31 +36,35 @@ onMounted(() => {
 	<show-code :code="`<tree-tenant-all></tree-tenant-all>`">
 		<template #message>
 			<table>
-				<tr>
-					<th>属性</th>
-					<th>描述</th>
-					<th>默认值</th>
-				</tr>
-				<tr>
-					<td>expandAll</td>
-					<td>是否展开全部</td>
-					<td>false</td>
-				</tr>
-				<tr>
-					<td>placeholder</td>
-					<td>提示文字</td>
-					<td>请选择租户、部门、人员</td>
-				</tr>
-				<tr>
-					<td>v-model:value</td>
-					<td>双向绑定的值</td>
-					<td>-</td>
-				</tr>
-				<tr>
-					<td>@change</td>
-					<td>事件：值变化时调用此函数，table 时建议触发 getTableList 方法</td>
-					<td>function(value: string)</td>
-				</tr>
+				<tbody>
+					<tr>
+						<th>属性</th>
+						<th>描述</th>
+						<th>默认值</th>
+					</tr>
+					<tr>
+						<td>expandAll</td>
+						<td>是否展开全部</td>
+						<td>false</td>
+					</tr>
+					<tr>
+						<td>placeholder</td>
+						<td>提示文字</td>
+						<td>请选择租户、部门、人员</td>
+					</tr>
+					<tr>
+						<td>v-model:value</td>
+						<td>双向绑定的值</td>
+						<td>-</td>
+					</tr>
+					<tr>
+						<td>@change</td>
+						<td>
+							事件：值变化时调用此函数，table 时建议触发 getTableList 方法
+						</td>
+						<td>function(value: string)</td>
+					</tr>
+				</tbody>
 			</table>
 		</template>
 	</show-code>
@@ -72,31 +76,35 @@ onMounted(() => {
 	<show-code :code="`<tree-tenant></tree-tenant>`">
 		<template #message>
 			<table>
-				<tr>
-					<th>属性</th>
-					<th>描述</th>
-					<th>默认值</th>
-				</tr>
-				<tr>
-					<td>expandAll</td>
-					<td>是否展开全部</td>
-					<td>false</td>
-				</tr>
-				<tr>
-					<td>placeholder</td>
-					<td>提示文字</td>
-					<td>请选择租户</td>
-				</tr>
-				<tr>
-					<td>v-model:value</td>
-					<td>双向绑定的值</td>
-					<td>-</td>
-				</tr>
-				<tr>
-					<td>@change</td>
-					<td>事件：值变化时调用此函数，table 时建议触发 getTableList 方法</td>
-					<td>function(value: string)</td>
-				</tr>
+				<tbody>
+					<tr>
+						<th>属性</th>
+						<th>描述</th>
+						<th>默认值</th>
+					</tr>
+					<tr>
+						<td>expandAll</td>
+						<td>是否展开全部</td>
+						<td>false</td>
+					</tr>
+					<tr>
+						<td>placeholder</td>
+						<td>提示文字</td>
+						<td>请选择租户</td>
+					</tr>
+					<tr>
+						<td>v-model:value</td>
+						<td>双向绑定的值</td>
+						<td>-</td>
+					</tr>
+					<tr>
+						<td>@change</td>
+						<td>
+							事件：值变化时调用此函数，table 时建议触发 getTableList 方法
+						</td>
+						<td>function(value: string)</td>
+					</tr>
+				</tbody>
 			</table>
 		</template>
 	</show-code>
@@ -107,31 +115,35 @@ onMounted(() => {
 	<show-code :code="`<tree-dept></tree-dept>`">
 		<template #message>
 			<table>
-				<tr>
-					<th>属性</th>
-					<th>描述</th>
-					<th>默认值</th>
-				</tr>
-				<tr>
-					<td>expandAll</td>
-					<td>是否展开全部</td>
-					<td>false</td>
-				</tr>
-				<tr>
-					<td>placeholder</td>
-					<td>提示文字</td>
-					<td>请选部门</td>
-				</tr>
-				<tr>
-					<td>v-model:value</td>
-					<td>双向绑定的值</td>
-					<td>-</td>
-				</tr>
-				<tr>
-					<td>@change</td>
-					<td>事件：值变化时调用此函数，table 时建议触发 getTableList 方法</td>
-					<td>function(value: string)</td>
-				</tr>
+				<tbody>
+					<tr>
+						<th>属性</th>
+						<th>描述</th>
+						<th>默认值</th>
+					</tr>
+					<tr>
+						<td>expandAll</td>
+						<td>是否展开全部</td>
+						<td>false</td>
+					</tr>
+					<tr>
+						<td>placeholder</td>
+						<td>提示文字</td>
+						<td>请选部门</td>
+					</tr>
+					<tr>
+						<td>v-model:value</td>
+						<td>双向绑定的值</td>
+						<td>-</td>
+					</tr>
+					<tr>
+						<td>@change</td>
+						<td>
+							事件：值变化时调用此函数，table 时建议触发 getTableList 方法
+						</td>
+						<td>function(value: string)</td>
+					</tr>
+				</tbody>
 			</table>
 		</template>
 	</show-code>

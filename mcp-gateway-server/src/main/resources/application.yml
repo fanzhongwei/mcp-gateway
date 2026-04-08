@@ -23,9 +23,11 @@ root:
 login:
   remember: false
   # 不需要登陆拦截的url，多个以英文逗号隔开
-  permitUrl: /mcp/sse/**,/mcp/http/**
+  permitUrl: /v3/api-docs/**,/mcp/**
 
 spring:
+  profiles:
+    active: dev
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:

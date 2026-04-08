@@ -21,16 +21,18 @@ const dateRange = ref([])
 	<show-code :code="code">
 		<template #message>
 			<table>
-				<tr>
-					<th>属性</th>
-					<th>描述</th>
-					<th>默认值</th>
-				</tr>
-				<tr>
-					<td>v-model:value</td>
-					<td>双向绑定的值</td>
-					<td>[]</td>
-				</tr>
+				<tbody>
+					<tr>
+						<th>属性</th>
+						<th>描述</th>
+						<th>默认值</th>
+					</tr>
+					<tr>
+						<td>v-model:value</td>
+						<td>双向绑定的值</td>
+						<td>[]</td>
+					</tr>
+				</tbody>
 			</table>
 		</template>
 	</show-code>

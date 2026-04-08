@@ -59,66 +59,68 @@ const handleCatRowData = () => {
 	<show-code language="xml" code="<admin-pay-table></admin-pay-table>">
 		<template #message>
 			<table>
-				<tr>
-					<th>属性</th>
-					<th>类型</th>
-					<th>描述</th>
-					<th>默认值</th>
-				</tr>
-				<tr>
-					<td>ajax</td>
-					<td>function</td>
-					<td>列表ajax数据</td>
-					<td>无</td>
-				</tr>
-				<tr>
-					<td>columns</td>
-					<td>array</td>
-					<td>表格列配置</td>
-					<td>[]</td>
-				</tr>
-				<tr>
-					<td>pagination</td>
-					<td>boolean</td>
-					<td>是否分页</td>
-					<td>true</td>
-				</tr>
-				<tr>
-					<td>exportObj</td>
-					<td>0bject</td>
-					<td>导出功能</td>
-					<td>
-						{ exportName: '', exportType: 'xlsx', exportMethod: () => {}, }
-					</td>
-				</tr>
-				<tr>
-					<td>parentData</td>
-					<td>array</td>
-					<td>静态数据，不请求 ajax 和 分页</td>
-					<td>[]</td>
-				</tr>
-				<tr>
-					<td>isAjax</td>
-					<td>boolean</td>
-					<td>是否加载自动请求</td>
-					<td>true</td>
-				</tr>
-				<tr>
-					<td>isRowSelection</td>
-					<td>boolean</td>
-					<td>是否开启选择</td>
-					<td>false</td>
-				</tr>
-				<tr>
-					<td>modalTableName</td>
-					<td>number</td>
-					<td>
-						方便弹窗控制 th 的显示（storage 保存用户选择，同页面多个 pay-table
-						是必填，否则页面异常）, 设置后分页默认
-						10，不再自动计算可是区域生产默认分页值
-					</td>
-					<td>无</td>
-				</tr>
+				<tbody>
+					<tr>
+						<th>属性</th>
+						<th>类型</th>
+						<th>描述</th>
+						<th>默认值</th>
+					</tr>
+					<tr>
+						<td>ajax</td>
+						<td>function</td>
+						<td>列表ajax数据</td>
+						<td>无</td>
+					</tr>
+					<tr>
+						<td>columns</td>
+						<td>array</td>
+						<td>表格列配置</td>
+						<td>[]</td>
+					</tr>
+					<tr>
+						<td>pagination</td>
+						<td>boolean</td>
+						<td>是否分页</td>
+						<td>true</td>
+					</tr>
+					<tr>
+						<td>exportObj</td>
+						<td>0bject</td>
+						<td>导出功能</td>
+						<td>
+							{ exportName: '', exportType: 'xlsx', exportMethod: () => {}, }
+						</td>
+					</tr>
+					<tr>
+						<td>parentData</td>
+						<td>array</td>
+						<td>静态数据，不请求 ajax 和 分页</td>
+						<td>[]</td>
+					</tr>
+					<tr>
+						<td>isAjax</td>
+						<td>boolean</td>
+						<td>是否加载自动请求</td>
+						<td>true</td>
+					</tr>
+					<tr>
+						<td>isRowSelection</td>
+						<td>boolean</td>
+						<td>是否开启选择</td>
+						<td>false</td>
+					</tr>
+					<tr>
+						<td>modalTableName</td>
+						<td>number</td>
+						<td>
+							方便弹窗控制 th 的显示（storage 保存用户选择，同页面多个 pay-table
+							是必填，否则页面异常）, 设置后分页默认
+							10，不再自动计算可是区域生产默认分页值
+						</td>
+						<td>无</td>
+					</tr>
+				</tbody>
 			</table>
 			<div>
 				<br />
@@ -184,29 +186,31 @@ const handleCatRowData = () => {
 				<show-code language="ts" :code="code1">
 					<template #message>
 						<table>
-							<tr>
-								<th>属性</th>
-								<th>描述</th>
-								<th>默认值</th>
-							</tr>
-							<tr>
-								<td>exportObj</td>
-								<td>导出 Objec</td>
-								<td>无</td>
-							</tr>
-							<tr>
-								<td>exportObj.exportName</td>
-								<td>导出文件名称（必填）</td>
-								<td>无</td>
-							</tr>
-							<tr>
-								<td>exportObj.exportMethod</td>
-								<td>
-									导出方法（必填），即可在 pay-table
-									搜索区域最右侧使用导出功能。
-								</td>
-								<td>无</td>
-							</tr>
+							<tbody>
+								<tr>
+									<th>属性</th>
+									<th>描述</th>
+									<th>默认值</th>
+								</tr>
+								<tr>
+									<td>exportObj</td>
+									<td>导出 Objec</td>
+									<td>无</td>
+								</tr>
+								<tr>
+									<td>exportObj.exportName</td>
+									<td>导出文件名称（必填）</td>
+									<td>无</td>
+								</tr>
+								<tr>
+									<td>exportObj.exportMethod</td>
+									<td>
+										导出方法（必填），即可在 pay-table
+										搜索区域最右侧使用导出功能。
+									</td>
+									<td>无</td>
+								</tr>
+							</tbody>
 						</table>
 					</template>
 				</show-code>
@@ -218,16 +222,18 @@ const handleCatRowData = () => {
 				<show-code language="ts" :code="code2">
 					<template #message>
 						<table>
-							<tr>
-								<th>属性</th>
-								<th>描述</th>
-								<th>默认值</th>
-							</tr>
-							<tr>
-								<td>parentData</td>
-								<td>静态数据，设置后不支持分页，不支持 table ajax 请求</td>
-								<td>无</td>
-							</tr>
+							<tbody>
+								<tr>
+									<th>属性</th>
+									<th>描述</th>
+									<th>默认值</th>
+								</tr>
+								<tr>
+									<td>parentData</td>
+									<td>静态数据，设置后不支持分页，不支持 table ajax 请求</td>
+									<td>无</td>
+								</tr>
+							</tbody>
 						</table>
 					</template>
 				</show-code>
@@ -245,19 +251,21 @@ const handleCatRowData = () => {
 					<show-code language="ts" :code="code3">
 						<template #message>
 							<table>
-								<tr>
-									<th>属性</th>
-									<th>描述</th>
-									<th>默认值</th>
-								</tr>
-								<tr>
-									<td>isRowSelection</td>
-									<td>
-										是否显示 checkbox，true 时，使用 handleCatRowData
-										示例获取用户选择
-									</td>
-									<td>false</td>
-								</tr>
+								<tbody>
+									<tr>
+										<th>属性</th>
+										<th>描述</th>
+										<th>默认值</th>
+									</tr>
+									<tr>
+										<td>isRowSelection</td>
+										<td>
+											是否显示 checkbox，true 时，使用 handleCatRowData
+											示例获取用户选择
+										</td>
+										<td>false</td>
+									</tr>
+								</tbody>
 							</table>
 						</template>
 					</show-code>
