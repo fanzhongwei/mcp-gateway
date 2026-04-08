@@ -1110,13 +1110,23 @@ watch(
 				<i class="ri-arrow-left-line mr-1"></i>
 				返回
 			</a-button>
-			<div class="api-name-input">
-				<a-input
-					v-model:value="apiForm.name"
-					placeholder="请输入接口名称"
-					size="large"
-					class="name-input"
-				/>
+			<div class="api-meta-inputs">
+				<div class="api-name-input">
+					<a-input
+						v-model:value="apiForm.name"
+						placeholder="请输入接口名称"
+						size="large"
+						class="name-input"
+					/>
+				</div>
+				<div class="api-desc-input">
+					<a-input
+						v-model:value="apiForm.description"
+						placeholder="请输入接口说明"
+						size="large"
+						class="desc-input"
+					/>
+				</div>
 			</div>
 		</div>
 		<!-- 顶部：API 请求定义 -->
@@ -1826,10 +1836,28 @@ watch(
 			border-bottom-color: #303030;
 		}
 
-		.api-name-input {
+		.api-meta-inputs {
 			flex: 1;
 			padding-left: 18px;
+			display: flex;
+			gap: 12px;
+			min-width: 0;
+		}
+
+		.api-name-input,
+		.api-desc-input {
+			flex: 1;
+			min-width: 0;
+		}
+
+		.api-name-input {
 			.name-input {
+				width: 100%;
+			}
+		}
+
+		.api-desc-input {
+			.desc-input {
 				width: 100%;
 			}
 		}
