@@ -47,6 +47,65 @@ const urlForm = reactive({
 const showTreeSelect = ref(false)
 const parsedResults = ref<ParsedImportResult[]>([])
 
+const normalizeSingleQuotedJsonStrings = (input: string): string => {
+	let result = ''
+	let inDoubleQuote = false
+	let inSingleQuote = false
+	let escaped = false
+
+	for (let i = 0; i < input.length; i += 1) {
+		const char = input[i]
+		if (escaped) {
+			if (inSingleQuote && char === '"') {
+				result += '\\"'
+			} else {
+				result += char
+			}
+			escaped = false
+			continue
+		}
+
+		if (char === '\\') {
+			result += char
+			escaped = true
+			continue
+		}
+
+		if (!inSingleQuote && char === '"') {
+			inDoubleQuote = !inDoubleQuote
+			result += char
+			continue
+		}
+
+		if (!inDoubleQuote && char === "'") {
+			inSingleQuote = !inSingleQuote
+			result += '"'
+			continue
+		}
+
+		result += char
+	}
+
+	return result
+}
+
+const parseJsonWithFallback = (text: string, sourceObj?: unknown): any => {
+	if (sourceObj && typeof sourceObj === 'object') {
+		return sourceObj
+	}
+
+	try {
+		return JSON.parse(text)
+	} catch (firstError) {
+		try {
+			const normalized = normalizeSingleQuotedJsonStrings(text)
+			return JSON.parse(normalized)
+		} catch {
+			throw firstError
+		}
+	}
+}
+
 // 文件上传前的验证
 const beforeUpload: UploadProps['beforeUpload'] = file => {
 	const isJson = file.type === 'application/json' || file.name.endsWith('.json')
@@ -109,7 +168,7 @@ const processFileContent = async (file: UploadFile) => {
 
 		// 判断是 JSON 还是 YAML
 		if (file.name.endsWith('.json')) {
-			apiSpec = JSON.parse(text)
+			apiSpec = parseJsonWithFallback(text)
 		} else {
 			// YAML 解析需要引入 yaml 库，这里先做简单处理
 			message.warning('YAML 格式解析功能待实现')
@@ -119,7 +178,7 @@ const processFileContent = async (file: UploadFile) => {
 		// 验证 OpenAPI/Swagger 格式
 		if (!validateApiSpec(apiSpec)) {
 			message.error(
-				'文件格式不正确，请确保是 OpenAPI 3.0、3.1 或 Swagger 2.0 格式',
+				'文件格式不正确，请确保是 OpenAPI 3.0、3.1 或 Swagger 2.x 格式',
 			)
 			return
 		}
@@ -200,12 +259,7 @@ const handleUrlImport = async () => {
 		if (contentType.includes('json') || urlForm.url.endsWith('.json')) {
 			// JSON 格式
 			try {
-				// 如果响应数据已经是对象，直接使用；否则解析字符串
-				if (typeof responseData === 'object') {
-					apiSpec = responseData
-				} else {
-					apiSpec = JSON.parse(text)
-				}
+				apiSpec = parseJsonWithFallback(text, responseData)
 			} catch (e) {
 				message.error(
 					'JSON 解析失败：' + (e instanceof Error ? e.message : '未知错误'),
@@ -226,11 +280,7 @@ const handleUrlImport = async () => {
 		} else {
 			// 尝试作为 JSON 解析
 			try {
-				if (typeof responseData === 'object') {
-					apiSpec = responseData
-				} else {
-					apiSpec = JSON.parse(text)
-				}
+				apiSpec = parseJsonWithFallback(text, responseData)
 			} catch {
 				message.error('无法识别文件格式，请确保 URL 指向的是 JSON 或 YAML 文件')
 				urlForm.loading = false
@@ -241,7 +291,7 @@ const handleUrlImport = async () => {
 		// 验证 OpenAPI/Swagger 格式
 		if (!validateApiSpec(apiSpec)) {
 			message.error(
-				'文件格式不正确，请确保是 OpenAPI 3.0、3.1 或 Swagger 2.0 格式',
+				'文件格式不正确，请确保是 OpenAPI 3.0、3.1 或 Swagger 2.x 格式',
 			)
 			urlForm.loading = false
 			return

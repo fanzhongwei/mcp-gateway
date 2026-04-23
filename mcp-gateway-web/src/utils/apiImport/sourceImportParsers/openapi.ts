@@ -17,15 +17,19 @@ type OpenApiLeaf = {
 	description: string
 }
 
+const isOpenApi3Version = (version: unknown): boolean =>
+	typeof version === 'string' &&
+	(version.startsWith('3.0') || version.startsWith('3.1'))
+
+const isSwagger2Version = (version: unknown): boolean =>
+	typeof version === 'string' && version.startsWith('2.')
+
 export const validateApiSpec = (spec: any): boolean => {
 	if (!spec || typeof spec !== 'object') return false
-	if (
-		spec.openapi &&
-		(spec.openapi.startsWith('3.0') || spec.openapi.startsWith('3.1'))
-	) {
+	if (isOpenApi3Version(spec.openapi)) {
 		return true
 	}
-	if (spec.swagger && spec.swagger.startsWith('2.0')) {
+	if (isSwagger2Version(spec.swagger)) {
 		return true
 	}
 	return false
@@ -34,10 +38,8 @@ export const validateApiSpec = (spec: any): boolean => {
 const parseApiSpecToTree = (spec: any): any[] => {
 	const tree: any[] = []
 	if (!spec || !spec.paths) return tree
-	const isOpenAPI3 =
-		spec.openapi &&
-		(spec.openapi.startsWith('3.0') || spec.openapi.startsWith('3.1'))
-	const isSwagger2 = spec.swagger && spec.swagger.startsWith('2.0')
+	const isOpenAPI3 = isOpenApi3Version(spec.openapi)
+	const isSwagger2 = isSwagger2Version(spec.swagger)
 	if (!isOpenAPI3 && !isSwagger2) return tree
 
 	const httpMethods = [
@@ -55,9 +57,11 @@ const parseApiSpecToTree = (spec: any): any[] => {
 
 	Object.keys(spec.paths).forEach(path => {
 		const pathItem = spec.paths[path]
+		if (!pathItem || typeof pathItem !== 'object') return
 		httpMethods.forEach(method => {
 			if (!pathItem[method]) return
 			const operation = pathItem[method]
+			if (!operation || typeof operation !== 'object') return
 			const operationId = operation.operationId || path
 			const summary = operation.summary || operationId
 			const description = operation.description || ''
@@ -110,10 +114,12 @@ const parseApiSpecToTree = (spec: any): any[] => {
 		const pathMap = new Map<string, OpenApiLeaf[]>()
 		Object.keys(spec.paths).forEach(path => {
 			const pathItem = spec.paths[path]
+			if (!pathItem || typeof pathItem !== 'object') return
 			const pathChildren: OpenApiLeaf[] = []
 			httpMethods.forEach(method => {
 				if (!pathItem[method]) return
 				const operation = pathItem[method]
+				if (!operation || typeof operation !== 'object') return
 				const operationId = operation.operationId || path
 				const summary = operation.summary || operationId
 				const description = operation.description || ''
@@ -203,13 +209,16 @@ const generateJsonExample = (schema: any, spec: any = null): any => {
 
 const resolveParameterRef = (param: any, spec: any): any => {
 	if (!param.$ref || !spec) return param
-	const refPath = param.$ref.replace('#/', '').split('/')
+	const refPath = String(param.$ref).replace('#/', '').split('/')
 	if (
 		refPath.length >= 3 &&
 		refPath[0] === 'components' &&
 		refPath[1] === 'parameters'
 	) {
 		return spec?.components?.parameters?.[refPath[2]] || param
+	}
+	if (refPath.length >= 2 && refPath[0] === 'parameters') {
+		return spec?.parameters?.[refPath[1]] || param
 	}
 	return param
 }
@@ -246,7 +255,9 @@ const extractSecurityHeaders = (operation: any, spec: any): any[] => {
 	const security = operation.security || spec.security || []
 	security.forEach((sec: any) => {
 		Object.keys(sec).forEach((schemeName: string) => {
-			const scheme = spec.components?.securitySchemes?.[schemeName]
+			const scheme =
+				spec.components?.securitySchemes?.[schemeName] ||
+				spec.securityDefinitions?.[schemeName]
 			if (!scheme) return
 			if (scheme.type === 'http') {
 				if (scheme.scheme === 'bearer') {
@@ -292,8 +303,12 @@ const convertOperationToApiData = (
 ): ApiData => {
 	const { path, method, operation, summary, description } = apiInfo
 	const pathItem = spec.paths?.[path] || {}
-	const pathParameters = pathItem.parameters || []
-	const operationParameters = operation.parameters || []
+	const pathParameters = Array.isArray(pathItem.parameters)
+		? pathItem.parameters
+		: []
+	const operationParameters = Array.isArray(operation.parameters)
+		? operation.parameters
+		: []
 	const allParameters = [...pathParameters, ...operationParameters]
 
 	const queryParams: any[] = []
