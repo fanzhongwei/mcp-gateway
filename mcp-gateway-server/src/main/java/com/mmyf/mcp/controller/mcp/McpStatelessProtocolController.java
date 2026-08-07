@@ -100,7 +100,10 @@ public class McpStatelessProtocolController {
             HttpServletResponse response) throws IOException {
 
         // 校验认证
-        String accessToken = extractAccessToken(authHeader);
+        String accessToken = request.getParameter("token");
+        if (!StringUtils.hasText(accessToken)) {
+            accessToken = extractAccessToken(authHeader);
+        }
         if (!StringUtils.hasText(accessToken)) {
             responseError(response, HttpServletResponse.SC_UNAUTHORIZED,
                     McpError.builder(401).message("Invalid Access Token: Authorization header is required (Bearer token)").build());

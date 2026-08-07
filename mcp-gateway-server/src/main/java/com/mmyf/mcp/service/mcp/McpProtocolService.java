@@ -11,6 +11,7 @@ import com.mmyf.mcp.model.entity.mcp.McpService;
 import com.mmyf.mcp.model.entity.system.Api;
 import com.mmyf.mcp.model.entity.system.System;
 import com.mmyf.mcp.model.entity.system.SystemEnv;
+import com.mmyf.mcp.service.auth.McpPublishedAccessAuthenticator;
 import com.mmyf.mcp.service.converter.ToolConverter;
 import com.mmyf.mcp.service.system.ApiService;
 import com.mmyf.mcp.service.system.SystemEnvService;
@@ -64,6 +65,9 @@ public class McpProtocolService {
     @Autowired
     private ToolConverter toolConverter;
 
+    @Autowired
+    private McpPublishedAccessAuthenticator publishedAccessAuthenticator;
+
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final HttpClient httpClient = HttpClient.newBuilder()
             .connectTimeout(Duration.ofSeconds(30))
@@ -93,8 +97,8 @@ public class McpProtocolService {
             return null;
         }
 
-        // 验证访问令牌
-        if (!StringUtils.hasText(accessToken) || !accessToken.equals(service.getAccessToken())) {
+        // 验证访问令牌（静态 token 与内置 OAuth JWT 并行，由配置决定）
+        if (!StringUtils.hasText(accessToken) || !publishedAccessAuthenticator.allowAccess(service, serviceId, accessToken)) {
             log.warn("访问令牌验证失败");
             return null;
         }

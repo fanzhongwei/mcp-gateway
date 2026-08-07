@@ -23,7 +23,22 @@ root:
 login:
   remember: false
   # 不需要登陆拦截的url，多个以英文逗号隔开
-  permitUrl: /v3/api-docs/**,/mcp/**
+  permitUrl: /v3/api-docs/**,/mcp/**,/oauth/**
+
+# 已发布 MCP：静态 accessToken 与内置 OAuth（client_credentials）双认证，默认仅 LEGACY，与升级前行为一致
+mcp:
+  published-auth:
+    mode: LEGACY_ONLY
+    order: OAUTH_FIRST
+    fallback-enabled: true
+    oauth-server:
+      enabled: false
+      issuer: ""
+      audience: mcp-gateway
+      access-token-ttl-seconds: 3600
+      key-id: mcp-oauth-key-1
+      private-key-pem: ""
+      clients: []
 
 spring:
   profiles:
